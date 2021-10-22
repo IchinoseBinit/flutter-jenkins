@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('git') {
+            steps {
+                git branch: 'binit', credentialsId: 'IchinoseUserId', url: 'https://gitlab.com/aawishkar/e-commerce.git'
+            }
+        }
+        stage('build-apk'){
+            steps {
+                sh '/usr/local/flutter/bin/flutter build apk --split-per-abi'
+                
+            }
+        }
+        stage('sign Android') {
+            steps {
+                step([$class: 'SignApksBuilder', apksToSign: 'build/app/outputs/flutter-apk/*.apk', keyAlias: '', keyStoreId: 'AndroidSigningCertificate',  androidHome: env.ANDROID_HOME])
+            }
+        }
+    }
+}
