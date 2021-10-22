@@ -1,4 +1,4 @@
-# Using dockerized container to build signed apk and a web to download the file
+# Using dockerized container to build signed apk
 
 ## Building the image
 
